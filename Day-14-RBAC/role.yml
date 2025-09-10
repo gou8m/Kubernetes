@@ -13,7 +13,7 @@ rules:
     verbs: ["get", "list",]
   # - apiGroups: [""]
   #   resources: ["nodes"]
-  #   # resourceName: ["172-32-45-10.ec2.internal"]  -- to give access for specific pod
+  #   # resourceName: ["172-32-45-10.ec2.internal"]  -- to give access for specific node
   #   verbs: ["get", "list","watch"]
   - apiGroups: ["apps"]
     resources: ["deployments"]
