@@ -4,13 +4,17 @@ metadata:
   namespace: default
   name: developer-role
 rules:
-  - apiGroups: [""] # "" indicates the core API group ["apps"]
+  - apiGroups: [""] 
     resources: ["ConfigMap"]
     verbs: ["get", "list"]
-  - apiGroups: [""] # "" indicates the core API group ["apps"]
+  - apiGroups: [""] 
     resources: ["pods"]
     # resourceName: ["nginx-pod"]  -- to give access for specific pod
     verbs: ["get", "list",]
+  # - apiGroups: [""]
+  #   resources: ["nodes"]
+  #   # resourceName: ["172-32-45-10.ec2.internal"]  -- to give access for specific pod
+  #   verbs: ["get", "list","watch"]
   - apiGroups: ["apps"]
     resources: ["deployments"]
     verbs: ["get", "list"]
