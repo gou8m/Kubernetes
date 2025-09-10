@@ -9,6 +9,7 @@ rules:
     verbs: ["get", "list"]
   - apiGroups: [""] # "" indicates the core API group ["apps"]
     resources: ["pods"]
+    # resourceName: ["nginx-pod"]  -- to give access for specific pod
     verbs: ["get", "list",]
   - apiGroups: ["apps"]
     resources: ["deployments"]
