@@ -1,40 +1,51 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: mysql
   labels:
-    app: web
-  name: webapp
+    app: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web
+      app: mysql
   template:
     metadata:
       labels:
-        app: web
+        app: mysql
     spec:
       containers:
-        - image: nginx
-          name: app
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: rootpassword        # change this for security
+            - name: MYSQL_DATABASE
+              value: mydb
+            - name: MYSQL_USER
+              value: myuser
+            - name: MYSQL_PASSWORD
+              value: mypassword
           volumeMounts:
-            - mountPath: /data/db
-              name: db-store
+            - name: mysql-storage
+              mountPath: /var/lib/mysql   # MySQL data directory
       volumes:
-        - name: db-store
+        - name: mysql-storage
           persistentVolumeClaim:
-            claimName: ebs-claim
+            claimName: mysql-pvc          # must match the PVC name
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo-svc
+  name: mysql-service
 spec:
   selector:
-    app: web
+    app: mysql
   ports:
-    - port: 80
+    - name: mysql
       protocol: TCP
-      targetPort: 80
-  type: NodePort
-
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP   # internal service (use NodePort/LoadBalancer if you want external access)
